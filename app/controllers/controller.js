@@ -29,8 +29,7 @@ spiceUpControllers.controller ('DynamicCtrl',['$scope', '$location','MenuRespond
 	function($scope, $location, MenuResponder)	{
 
 		$scope.menuData = $scope.$parent.$root['manuList']
-		//$scope.message = "Hello world!";
-
+	
 	}]);
 
 spiceUpControllers.controller ('DeeplinkCtrl',['$scope', '$routeParams',
@@ -38,32 +37,35 @@ spiceUpControllers.controller ('DeeplinkCtrl',['$scope', '$routeParams',
 		$scope.paramMsg = $routeParams.msg;
 	}]);
 
-spiceUpControllers.controller ('menuCtrl',['$scope', '$location','MenuService','menuBycat',
-	function($scope, $location, $routeParams,MenuService,menuBycat)	{
-		$scope.Showmenu = $scope.$parent.$root['menuList']
+spiceUpControllers.controller ('menuCtrl',['$scope', '$location','menuBycat',
+	function($scope, $location,menuBycat)	{
 
-		$scope.ShowmenuByCat= 	$scope.$parent.$root['CatMenu'] 
-		$scope.paramMsg = $routeParams.menu_category;
-
+		$scope.menu_items=$scope.$parent.$root['CatMenu'] 
+ 		
 	}]);
 
 
-spiceUpControllers.controller('PostCtrl', ['$scope','$location', '$routeParams', 'menuIdPost',
-  function($scope,$location, $routeParams, menuIdPost) {
-
-  	$scope.ShowmenuById = 	$scope.$parent.$root['IdPost'] 
-    // $scope.post = menuIdPost.get({menu_id: $routeParams.menu_id});
-$scope.post =$routeParams.menu_id;
-$scope.post =$routeParams.menu_name;
-  }]);
+spiceUpControllers.controller('PostCtrl', ['$scope','$location','$routeParams','menuIdPost',
+function($scope,$location, $routeParams, menuIdPost) { 
+	// $scope.poll=$scope.$parent.$root['IdPost']
+          $scope.poll = menuIdPost.query({menu_id: $routeParams.menu_id});
+          $scope.$on('menu_id', function(data) {
+          console.dir(data);
+          if(data.menu_id ==$routeParams.menu_id) {
+          $scope.poll = data;
+         }});
+       }]);
 spiceUpControllers.controller('CatCtrl', ['$scope','$location', '$routeParams', 'catIdPost',
   function($scope,$location, $routeParams, catIdPost) {
 
-  	$scope.ShowmenuByCatId = 	$scope.$parent.$root['catIdPost'] 
-    // $scope.post = menuIdPost.get({menu_id: $routeParams.menu_id});
-$scope.menu_id =$routeParams.subcategory_id;
-$scope.post =$routeParams.menu_name;
-  }]);
+$scope.ShowmenuByCatId = catIdPost.query({subcategory_id: $routeParams.subcategory_id});
+          $scope.$on('subcategory_id', function(data) {
+          console.dir(data);
+          if(data.subcategory_id ==$routeParams.subcategory_id) {
+          $scope.ShowmenuByCatId = data;
+
+ }});
+       }]);
 
 // angular.module('clientApp')
 //   .controller('ProductCtrl', function ($scope, ProductsFactory, $modal, $log, $stateParams) {

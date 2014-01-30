@@ -2,8 +2,8 @@
 var cat = angular.module('cat', ['ngResource']);
 
 cat.factory('menuBycat', ['$resource',function($resource){
-     var menuByCat =  $resource('/restaurantapp/index.php/home/show_menulist_ByCat/:menu_category', {menu_category:'@menu_category'}, {
-       query: {method:'GET',isArray:true}
+     var menuByCat =  $resource('/restaurantapp/index.php/home/show_menulist_ByCat/', {},{
+       query: {method:'GET', isArray:true}
      });
      return menuByCat;
   }

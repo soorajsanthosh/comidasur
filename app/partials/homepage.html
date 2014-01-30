@@ -58,35 +58,44 @@
     </article>
      <!-- =============================show All menus============================= -->
       <article id="showallmenu" class="list scroll active">
-        <div>Search: <input ng-model="query" ></div>
-        <div style="height:40px"> 
-            <ul class="thumb">
-                <li  ng-repeat="cat in ShowmenuByCat | filter:query:menu_category" class="thumbnail phone-listing">
-              <img  src="assets/images/{{cat.menu_image}}">
-                 <p>
-                    <strong>
-                        <a href="#/homepage/menudetail/{{cat.menu_id}}" >{{cat.menu_name}} </a>
-                      
-                    </strong></p>
-                    <p>${{cat.menu_price}}</p>
-                </li>
-            </ul>
-        </div>
+        <div ng-controller="menuCtrl"> 
+          <ul id="thumbList">
+             <li ng-repeat="poll in menu_items | filter:query">
+               <!-- <img ng-src="assets/images/{{Showmenus.menu_image}}"/>
+                <a href="#/homepage/menudetail/{{Showmenus.menu_id}}">{{Showmenus.menu_name}}</a> -->
+                
+                    <img ng-src="assets/images/{{poll.menu_image}}"/>
+                <a href="#/homepage/menudetail/{{poll.menu_id}}">{{poll.menu_name}}</a>
+             </li>
+          </ul>
+    </div>
     </article>
      <!-- =============================menudetail============================= -->
      <article id="menudetail" class="scroll active">
+     <div ng-controller="PostCtrl" >
+    <div ng-repeat="polls in poll | filter:query"> 
+        <div class="large text  bold align_center">
+          <img src="assets/images/{{polls.menu_image}}"> 
+          </div>
+          <div class="large text  bold align_center">
+          {{polls.menu_name}} <!-- {{polls.menu_id}} -->
+          </div> 
      <div class="large text  bold align_center">
-      <img src="assets/images/caprese_salad.jpg"> </div> 
-        <div id="buttons" class="scrollable indented  current" ng-controller="PostCtrl">
-             <div class="large text  bold align_center">
-                <h3 class="large text  bold align_center">{{post.menu_id}}{{post.menu_name}}</h3>
-                <p>$7.5</p>
-                <p>Serve for 4 people</p>
-                <p>Lorem ipsum</p>
-            </div>    
-               <a href="#/order/myorder" class="button anchor margin-bottom">Add this to my order</a>
-               <a href="#/homepage/share" class="button anchor margin-bottom">Share this</a>
-        </div>
+          ${{polls.menu_price}} <!-- {{polls.menu_id}} -->
+     </div>
+     <div class="large text  bold align_center">
+          Served for:{{polls.menu_servefor}} <!-- {{polls.menu_id}} -->
+     </div>
+     <div class="large text  bold align_center">
+          {{polls.menu_description}} <!-- {{polls.menu_id}} -->
+     </div>
+    </div>
+    </div>
+ <div id="buttons" class="scrollable indented  current"> 
+      <a href="#/order/myorder" class="button anchor margin-bottom">Add this to my order</a>
+      <a href="#/homepage/share" class="button anchor margin-bottom">Share this</a> 
+</div>
+ 
     </article>
      <!-- =============================Share============================= -->
 
@@ -136,25 +145,32 @@
     </article>
       <!-- =============================menu items by category============================= -->
     <article id="menuitems" class="list scroll active">
+        <div ng-controller="CatCtrl" >
         <div>
             <p class="margin bottom">
-                    <a id="veg" href="#/homepage/menuitems" class="button">VEG</a>
-                    <a id="nonveg" href="#/homepage/menuitems" class="button">NON VEG</a>
+                    <!-- <a id="veg" href="#/homepage/menuitems" class="button">VEG</a>
+                    <a id="nonveg" href="#/homepage/menuitems" class="button">NON VEG</a> -->
+                    <select id="menu_category" name="menu_category">
+                                        <option value="" selected>Select Veg/NonVeg</option>
+                                    <option value="0" >Veg</option>
+                                <option value="1" >NonVeg</option>
+                            </select>
             </p>
         </div>
-        <div>
+        <div ng-model="menu_category">
             <ul>
                 <li class="thumb" ng-repeat="item in ShowmenuByCatId">
-                     <img src="assets/images/logo.jpg"> 
+                     <img src="assets/images/{{item.menu_image}}"> 
                     <div style="height:30px">
                         <div class="on-right text tiny">
-                            <a href="#/homepage/menudetail" >
-                                <strong>{{item.menu_id.toUpperCase()}}</strong></a>
+                            <a href="#/homepage/menudetail/{{item.menu_id}}" >
+                                <strong>{{item.menu_name}}</strong></a>
                              ${{item.menu_price}}
                         </div>
                     </div>
                 </li>
             </ul>
+        </div>
         </div>  
     </article>
 
