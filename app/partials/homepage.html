@@ -58,8 +58,9 @@
     </article>
      <!-- =============================show All menus============================= -->
       <article id="showallmenu" class="list scroll active">
-        <div ng-controller="menuCtrl"> 
-          <ul id="thumbList">
+        <div class="title">Search by Items: <input ng-model="query" ></div>
+        <div ng-controller="menuCtrl">
+            <ul id="thumbList">
              <li ng-repeat="poll in menu_items | filter:query">
                <!-- <img ng-src="assets/images/{{Showmenus.menu_image}}"/>
                 <a href="#/homepage/menudetail/{{Showmenus.menu_id}}">{{Showmenus.menu_name}}</a> -->
@@ -70,6 +71,7 @@
           </ul>
     </div>
     </article>
+   
      <!-- =============================menudetail============================= -->
      <article id="menudetail" class="scroll active">
      <div ng-controller="PostCtrl" >
@@ -152,14 +154,14 @@
                     <a id="nonveg" href="#/homepage/menuitems" class="button">NON VEG</a> -->
                     <select id="menu_category" name="menu_category">
                                         <option value="" selected>Select Veg/NonVeg</option>
-                                    <option value="0" >Veg</option>
-                                <option value="1" >NonVeg</option>
+                                    <option value="1" >Veg</option>
+                                <option value="2" >NonVeg</option>
                             </select>
             </p>
         </div>
         <div ng-model="menu_category">
             <ul>
-                <li class="thumb" ng-repeat="item in ShowmenuByCatId">
+                <li class="thumb" ng-repeat="item in ShowmenuByCatId"| filter:query>
                      <img src="assets/images/{{item.menu_image}}"> 
                     <div style="height:30px">
                         <div class="on-right text tiny">
